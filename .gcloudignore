@@ -1,0 +1,5 @@
+README.md
+cloudbuild.yaml
+.git
+pubsub-subscriber
+.gcloudignore

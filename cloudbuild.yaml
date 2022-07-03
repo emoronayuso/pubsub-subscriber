@@ -2,18 +2,32 @@ steps:
 
 - id: 'tag name'
   name: 'alpine'
-  entrypoint: 'sh'  
-  args: 
+  entrypoint: 'sh'
+  args:
   - '-c'
-  - | 
+  - |
       echo "***********************"
       echo "$TAG_NAME"
       echo "***********************"
 
+- id: 'Clone repo with TAG'
+  name: 'gcr.io/cloud-builders/git'
+  args:
+  - clone
+  - --branch
+  - $TAG_NAME
+  - 'https://github.com/emoronayuso/pubsub-subscriber.git'
+  dir: '.'
+
 - id: 'gcloud functions deploy'
-  name: gcr.io/cloud-builders/gcloud
-  entrypoint: 'sh'
-  args: 
-    - '-c'
-    - >
-      gcloud projects list
+  name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+  args:
+  - gcloud
+  - functions
+  - deploy
+  - subscriber_cf
+  - --region=europe-west3
+  - --source=.
+  - --trigger-topic=projects/pruebas-pubsub-systerminal/topics/topic-cf
+  - --runtime=python39
+  - --service-account=sa-subscription@pruebas-pubsub-systerminal.iam.gserviceaccount.com
