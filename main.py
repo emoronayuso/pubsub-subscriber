@@ -1,4 +1,5 @@
 import os
+import json
 from google.cloud import pubsub_v1
 
 SUBSCRIPTION_PATH = 'projects/pruebas-pubsub-systerminal/subscriptions/topic_cf-subscription'
@@ -15,10 +16,14 @@ def subscriber_cf(event, context):
     ##############################
     # read data from topic!
 
+    json_str = json.loads(event)
+
+    print("EVENT -> {}",event)
+
     if 'data' in event:
-        sensor_name = event['readings']['sensorName']
-        temperature = event['readings']['temperature']
-        humidity = event['readings']['humidity']
+        sensor_name = json_str['readings']['sensorName']
+        temperature = json_str['readings']['temperature']
+        humidity = json_str['readings']['humidity']
     else:
         sensor_name = 0
         temperature = 0
