@@ -2,14 +2,13 @@ import os
 from google.cloud import pubsub_v1
 
 SUBSCRIPTION_PATH = 'projects/pruebas-pubsub-systerminal/subscriptions/topic_cf-subscription'
-subscriber = pubsub_v1.SubscriberClient()
 
-def subscriber_cf(message: subscriber.message.Message) -> None:
+def subscriber_cf(message: pubsub_v1.subscriber.message.Message) -> None:
 
     ##############################
     # read data from topic!
 
-#    subscriber = pubsub_v1.SubscriberClient()
+    subscriber = pubsub_v1.SubscriberClient()
 
     print(f"Received {message}.")
     message.ack()
