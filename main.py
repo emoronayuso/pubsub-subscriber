@@ -21,9 +21,9 @@ def subscriber_cf(event, context):
     #print("EVENT -> {}",event)
 
     if 'data' in event:
-        sensor_name = event.data['readings']['sensorName']
-        temperature = event.data['readings']['temperature']
-        humidity = event.data['readings']['humidity']
+        sensor_name = event['data']['readings']['sensorName']
+        temperature = event['data']['readings']['temperature']
+        humidity = event['data']['readings']['humidity']
     else:
         sensor_name = 0
         temperature = 0
