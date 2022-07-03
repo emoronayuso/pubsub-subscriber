@@ -16,14 +16,14 @@ def subscriber_cf(event, context):
     ##############################
     # read data from topic!
 
-    json_str = json.loads(event)
+    #json_str = json.loads(event)
 
-    print("EVENT -> {}",event)
+    #print("EVENT -> {}",event)
 
     if 'data' in event:
-        sensor_name = json_str['readings']['sensorName']
-        temperature = json_str['readings']['temperature']
-        humidity = json_str['readings']['humidity']
+        sensor_name = event.data['readings']['sensorName']
+        temperature = event.data['readings']['temperature']
+        humidity = event.data['readings']['humidity']
     else:
         sensor_name = 0
         temperature = 0
