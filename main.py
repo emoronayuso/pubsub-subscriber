@@ -3,15 +3,30 @@ from google.cloud import pubsub_v1
 
 SUBSCRIPTION_PATH = 'projects/pruebas-pubsub-systerminal/subscriptions/topic_cf-subscription'
 
-def subscriber_cf(message: pubsub_v1.subscriber.message.Message) -> None:
+def subscriber_cf(event, context):
+    """Triggered from a message on a Cloud Pub/Sub topic.
+    Args:
+         event (dict): Event payload.
+         context (google.cloud.functions.Context): Metadata for the event.
+    """
+
+    print("This Function was triggered by messageId {} published at {}".format(context.event_id, context.timestamp))
 
     ##############################
     # read data from topic!
 
-    subscriber = pubsub_v1.SubscriberClient()
+    if 'data' in event:
+        sensor_name = event['readings']['sensorName']
+        temperature = event['readings']['temperature']
+        humidity = event['readings']['humidity']
+    else:
+        sensor_name = 0
+        temperature = 0
+        humidity = 0
 
-    print(f"Received {message}.")
-    message.ack()
+   subscriber = pubsub_v1.SubscriberClient()
+   message = subscriber.message.Message
+   message.ack()
 
 #    blob = bucket.get_blob(event['name'])
 #    data_json_str = blob.download_as_string()
