@@ -28,6 +28,6 @@ steps:
   - subscriber_cf
   - --region=europe-west3
   - --source=.
-  - --trigger-topic=projects/pruebas-pubsub-systerminal/topics/topic-cf
+  - --trigger-topic=topic-cf
   - --runtime=python39
   - --service-account=sa-subscription@pruebas-pubsub-systerminal.iam.gserviceaccount.com
