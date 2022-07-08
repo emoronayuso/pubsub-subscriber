@@ -54,7 +54,7 @@ def subscriber_cf(event, context):
     db = firestore.Client()
     doc_ref = db.collection(u'data').document(u'sensors')
     doc_ref.set({
-        u'sensorID': sensor_id,
+        u'sensorId': sensor_id,
         u'temperature': temperature,
         u'humidity': humidity,
         u'datetime': datetime.now()
