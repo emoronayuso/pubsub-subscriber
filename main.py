@@ -19,9 +19,9 @@ def subscriber_cf(event, context):
     # read data from topic!
 
     if 'data' in event:
-        sensor_id = event['data']['readings']['sensorId']
-        temperature = event['data']['readings']['temperature']
-        humidity = event['data']['readings']['humidity']
+        sensor_id = int(event['data']['readings']['sensorId'])
+        temperature = int(event['data']['readings']['temperature'])
+        humidity = int(event['data']['readings']['humidity'])
     else:
         sensor_name = 0
         temperature = 0
