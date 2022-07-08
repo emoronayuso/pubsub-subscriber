@@ -34,13 +34,21 @@ def subscriber_cf(event, context):
     ###############################
     # move the data to Firestore!
 
-    # Add a new document
+    # Add a new data to document
     db = firestore.Client()
     doc_ref = db.collection(u'data').document(u'sensors')
-    doc_ref.set({
-        u'sensorId': sensor_id,
-        u'temperature': temperature,
-        u'humidity': humidity,
-        u'datetime': datetime.now()
-    })
+
+    data['sensorId'] = sensor_id
+    data['temperature'] = temperature
+    data['humidity'] = humidity
+    data['datetime'] = datetime.now() 
+
+    doc_ref.set(data)
+
+#    doc_ref.set({
+#        u'sensorId': sensor_id,
+#        u'temperature': temperature,
+#        u'humidity': humidity,
+#        u'datetime': datetime.now()
+#    })
 
