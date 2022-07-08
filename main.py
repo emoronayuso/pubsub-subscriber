@@ -35,15 +35,8 @@ def subscriber_cf(event, context):
     ##############################
     # read data from topic!
 
-    #print(event['data'][0]['readings'][0])
-
     if 'data' in event:
-        #sensor_id = base64.b64decode(event['data']['readings']['sensorId']).decode('utf-8')
-        #sensor_id = event['data']['readings']['sensorId']
-        #temperature = event['data']['readings']['temperature']
-        #temperature = base64.b64decode(event['data']['readings']['temperature']).decode('utf-8')
-        #humidity = base64.b64decode(event['data']['readings']['humidity']).decode('utf-8')
-        #humidity = event['data']['readings']['humidity']
+        
         message = event.get("data")
         decoded_message = json.loads(base64.b64decode(message).decode('utf-8'))
         row_to_insert = {
@@ -54,10 +47,7 @@ def subscriber_cf(event, context):
                         }
     else:
         row_to_insert = {"sensorId":0,"temperature":0,"humidity":0,"datetime":datetime.now()}
-    #    sensor_name = 0
-    #    temperature = 0
-    #    humidity = 0
-
+    
     #subscriber = pubsub_v1.SubscriberClient()
     #message = subscriber.message.Message
     #message.ack()
@@ -67,23 +57,9 @@ def subscriber_cf(event, context):
 
     # Add a new data to document
     db = firestore.Client(project=PROJECT)
-    doc_ref = db.collection(u'data').document(u'sensors')
-
-    #data = json.dumps(event['data']['readings'])
-
-    #data['sensorId'] = sensor_id
-    #data['temperature'] = temperature
-    #data['humidity'] = humidity
-    #data['datetime'] = datetime.now() 
+    doc_ref = db.collection('data').document('sensors')
 
     doc_ref.set(row_to_insert)
-
- #   doc_ref.set({
- #       u'sensorId': sensor_id,
- #       u'temperature': temperature,
- #       u'humidity': humidity,
- #       u'datetime': datetime.now()
- #   })
 
     return  200, {"status": "success"}
 
