@@ -6,6 +6,7 @@ from google.cloud import firestore
 from datetime import datetime
 
 SUBSCRIPTION_PATH = 'projects/pruebas-pubsub-systerminal/subscriptions/topic_cf-subscription'
+PROJECT = 'pruebas-pubsub-systerminal'
 
 def subscriber_cf(event, context):
     """Background Cloud Function to be triggered by Pub/Sub.
@@ -65,7 +66,7 @@ def subscriber_cf(event, context):
     # move the data to Firestore!
 
     # Add a new data to document
-    db = firestore.Client()
+    db = firestore.Client(project=PROJECT)
     doc_ref = db.collection(u'data').document(u'sensors')
 
     #data = json.dumps(event['data']['readings'])
