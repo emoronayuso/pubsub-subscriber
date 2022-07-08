@@ -18,14 +18,16 @@ def subscriber_cf(event, context):
     ##############################
     # read data from topic!
 
-    #if 'data' in event:
-    #    sensor_id = event['data']['readings']['sensorId']
-    #    temperature = event['data']['readings']['temperature']
-    #    humidity = event['data']['readings']['humidity']
-    #else:
-    #    sensor_name = 0
-    #    temperature = 0
-    #    humidity = 0
+    print(event['data']['readings'])
+
+    if 'data' in event:
+        sensor_id = event['data']['readings']['sensorId']
+        temperature = event['data']['readings']['temperature']
+        humidity = event['data']['readings']['humidity']
+    else:
+        sensor_name = 0
+        temperature = 0
+        humidity = 0
 
     subscriber = pubsub_v1.SubscriberClient()
     message = subscriber.message.Message
