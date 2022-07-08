@@ -18,6 +18,8 @@ def subscriber_cf(event, context):
     ##############################
     # read data from topic!
 
+    print(event['data']['readings'])
+
     if 'data' in event:
         sensor_id = event['data']['readings']['sensorId']
         temperature = event['data']['readings']['temperature']
