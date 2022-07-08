@@ -52,9 +52,9 @@ def subscriber_cf(event, context):
     #    temperature = 0
     #    humidity = 0
 
-    subscriber = pubsub_v1.SubscriberClient()
-    message = subscriber.message.Message
-    message.ack()
+    #subscriber = pubsub_v1.SubscriberClient()
+    #message = subscriber.message.Message
+    #message.ack()
 
     ###############################
     # move the data to Firestore!
