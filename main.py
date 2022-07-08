@@ -45,7 +45,7 @@ def subscriber_cf(event, context):
         #humidity = event['data']['readings']['humidity']
         message = event.get("data")
         decoded_message = json.loads(base64.b64decode(message).decode('utf-8'))
-        row_to_insert = [{"sensorId":decoded_message["sensorId"],"temperature":decoded_message["temperature"],"humidity":decoded_message["humidity"],"datetime":datetime.now()}]
+        row_to_insert = [{"sensorId":decoded_message['readings']["sensorId"],"temperature":decoded_message['readings']["temperature"],"humidity":decoded_message['readings']["humidity"],"datetime":datetime.now()}]
     else:
         row_to_insert = [{"sensorId":0,"temperature":0,"humidity":0,"datetime":datetime.now()}]
     #    sensor_name = 0
