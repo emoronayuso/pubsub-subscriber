@@ -23,11 +23,11 @@ def subscriber_cf(event, context):
     #print("EVENT -> {}",event)
 
     if 'data' in event:
-        sensor_name = str(event['data']['readings']['sensorName'])
+        sensor_id = str(event['data']['readings']['sensorId'])
         temperature = event['data']['readings']['temperature']
         humidity = event['data']['readings']['humidity']
     else:
-        sensor_name = "sensor_0"
+        sensor_name = 0
         temperature = 0
         humidity = 0
 
@@ -54,7 +54,7 @@ def subscriber_cf(event, context):
     db = firestore.Client()
     doc_ref = db.collection(u'data').document(u'sensors')
     doc_ref.set({
-        u'sensorName': sensor_name,
+        u'sensorId': sensor_id,
         u'temperature': temperature,
         u'humidity': humidity,
         u'datetime': datetime.now()
