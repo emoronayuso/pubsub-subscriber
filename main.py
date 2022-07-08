@@ -18,12 +18,8 @@ def subscriber_cf(event, context):
     ##############################
     # read data from topic!
 
-    #json_str = json.loads(event)
-
-    #print("EVENT -> {}",event)
-
     if 'data' in event:
-        sensor_id = str(event['data']['readings']['sensorId'])
+        sensor_id = event['data']['readings']['sensorId']
         temperature = event['data']['readings']['temperature']
         humidity = event['data']['readings']['humidity']
     else:
@@ -35,20 +31,8 @@ def subscriber_cf(event, context):
     message = subscriber.message.Message
     message.ack()
 
-#    blob = bucket.get_blob(event['name'])
-#    data_json_str = blob.download_as_string()
-#    data_json = json.loads(data_json_str)
-
-#    sensor_name = data_json['sensorName']
-#    temperature = data_json['temperature']
-#    humidity = data_json['humidity']
-
-
     ###############################
     # move the data to Firestore!
-
-    #dateTimeObj = datetime.now()
-    #timestampStr = dateTimeObj.strftime("%d-%b-%y,%H:%M")
 
     # Add a new document
     db = firestore.Client()
@@ -59,5 +43,4 @@ def subscriber_cf(event, context):
         u'humidity': humidity,
         u'datetime': datetime.now()
     })
-
 
