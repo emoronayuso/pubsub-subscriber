@@ -1,6 +1,8 @@
 import os
 import json
 from google.cloud import pubsub_v1
+from google.cloud import firestore
+from datetime import datetime
 
 SUBSCRIPTION_PATH = 'projects/pruebas-pubsub-systerminal/subscriptions/topic_cf-subscription'
 
@@ -44,5 +46,18 @@ def subscriber_cf(event, context):
 
     ###############################
     # move the data to Firestore!
+
+    #dateTimeObj = datetime.now()
+    #timestampStr = dateTimeObj.strftime("%d-%b-%y,%H:%M")
+
+    # Add a new document
+    db = firestore.Client()
+    doc_ref = db.collection(u'data').document(u'sensors')
+    doc_ref.set({
+        u'sensorName': sensor_name,
+        u'temperature': temperature,
+        u'humidity': humidity,
+        u'datetime': datetime.now()
+    })
 
 
