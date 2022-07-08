@@ -37,16 +37,20 @@ def subscriber_cf(event, context):
     #print(event['data'][0]['readings'][0])
 
     if 'data' in event:
-        sensor_id = base64.b64decode(event['data']['readings']['sensorId']).decode('utf-8')
+        #sensor_id = base64.b64decode(event['data']['readings']['sensorId']).decode('utf-8')
         #sensor_id = event['data']['readings']['sensorId']
         #temperature = event['data']['readings']['temperature']
-        temperature = base64.b64decode(event['data']['readings']['temperature']).decode('utf-8')
-        humidity = base64.b64decode(event['data']['readings']['humidity']).decode('utf-8')
+        #temperature = base64.b64decode(event['data']['readings']['temperature']).decode('utf-8')
+        #humidity = base64.b64decode(event['data']['readings']['humidity']).decode('utf-8')
         #humidity = event['data']['readings']['humidity']
+        message = event.get("data")
+        decoded_message = json.loads(base64.b64decode(message).decode('utf-8'))
+        row_to_insert = [{"sensorId":decoded_message["sensorId"],"temperature":decoded_message["temperature"],"humidity":decoded_message["humidity"],"datetime":datetime.now()}]
     else:
-        sensor_name = 0
-        temperature = 0
-        humidity = 0
+        row_to_insert = [{"sensorId":0,"temperature":0,"humidity":0,"datetime":datetime.now()}]
+    #    sensor_name = 0
+    #    temperature = 0
+    #    humidity = 0
 
     subscriber = pubsub_v1.SubscriberClient()
     message = subscriber.message.Message
@@ -66,12 +70,14 @@ def subscriber_cf(event, context):
     #data['humidity'] = humidity
     #data['datetime'] = datetime.now() 
 
-    doc_ref.set(data)
+    doc_ref.set(row_to_insert)
 
-    doc_ref.set({
-        u'sensorId': sensor_id,
-        u'temperature': temperature,
-        u'humidity': humidity,
-        u'datetime': datetime.now()
-    })
+ #   doc_ref.set({
+ #       u'sensorId': sensor_id,
+ #       u'temperature': temperature,
+ #       u'humidity': humidity,
+ #       u'datetime': datetime.now()
+ #   })
+
+    return  200, {"status": "success"}
 
