@@ -56,7 +56,7 @@ def subscriber_cf(event, context):
     # move the data to Firestore!
 
     # Add a new data to document
-    db = firestore.Client(project=PROJECT)
+    db = firestore.client(project=PROJECT)
     doc_ref = db.collection('data').document('sensors')
 
     doc_ref.set(row_to_insert)
