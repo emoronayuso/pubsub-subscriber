@@ -2,7 +2,10 @@ import os
 import json
 import base64
 from google.cloud import pubsub_v1
-from google.cloud import firestore
+#from google.cloud import firestore
+import firebase_admin
+from firebase_admin import credentials
+from firebase_admin import firestore
 from datetime import datetime
 
 SUBSCRIPTION_PATH = 'projects/pruebas-pubsub-systerminal/subscriptions/topic_cf-subscription'
@@ -56,7 +59,7 @@ def subscriber_cf(event, context):
     # move the data to Firestore!
 
     # Add a new data to document
-    db = firestore.client(project=PROJECT)
+    db = firestore.client()
     doc_ref = db.collection('data').document('sensors')
 
     doc_ref.set(row_to_insert)
