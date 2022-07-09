@@ -55,7 +55,7 @@ def subscriber_cf(event, context):
     db = firestore.Client()
     doc_ref = db.collection('data').document('sensors')
 
-    doc_ref.set(row_to_insert)
+    doc_ref.set(row_to_insert, merge=True)
 
     return  200, {"status": "success"}
 
