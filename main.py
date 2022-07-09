@@ -47,10 +47,6 @@ def subscriber_cf(event, context):
                         }
     else:
         row_to_insert = {"sensorId":0,"temperature":0,"humidity":0,"datetime":datetime.now()}
-    
-    #subscriber = pubsub_v1.SubscriberClient()
-    #message = subscriber.message.Message
-    #message.ack()
 
     ###############################
     # move the data to Firestore!
